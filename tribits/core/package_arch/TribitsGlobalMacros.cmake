@@ -1773,10 +1773,34 @@ MACRO(TRIBITS_SETUP_ENV)
     ENABLE_LANGUAGE(Fortran)
   ENDIF()
 
+  # Do some project-specific tweaks for compiler options, etc.
+  SET(PROJECT_COMPILER_CONFIG_FILE
+    "${${PROJECT_NAME}_SOURCE_DIR}/cmake/ProjectCompilerPostConfig.cmake"
+    CACHE FILEPATH
+    "Allow for project-specific compiler settings."
+    )
+  SET(KOKKOS_COMPILER_CONFIG_FILE
+    "${Kokkos_SOURCE_DIR}/cmake/kokkos_function.cmake"
+    CACHE FILEPATH
+    "Allow for compiler settings specified by kokkos."
+    )
+  IF (EXITS "${PROJECT_COMPILER_CONFIG_FILE}")
+    # This is one level of indirection to Kokkos
+    INCLUDE("${PROJECT_COMPILER_CONFIG_FILE}")
+  ELSEIF(EXITS "${KOKKOS_COMPILER_CONFIG_FILE}")
+   # This is directly pulling in kokkos file
+   INCLUDE("${KOKKOS_COMPILER_CONFIG_FILE}")
+   MESSAGE(FATAL_ERROR
+     "ToDo: Use info from kokkos to tweak compiler options, linke options. etc.")
+  ENDIF()
+
   # Set up for strong compiler warnings and warnings as errors
 
   INCLUDE(TribitsSetupBasicCompileLinkFlags)
   TRIBITS_SETUP_BASIC_COMPILE_LINK_FLAGS()
+
+  # ToDo #207: Could inject Kokkos compiler options and link options here or
+  # above
 
   #
   # The compilers are set, the environment is known to CMake.  Now set the
