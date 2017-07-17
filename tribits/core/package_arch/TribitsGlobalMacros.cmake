@@ -1784,10 +1784,10 @@ MACRO(TRIBITS_SETUP_ENV)
     CACHE FILEPATH
     "Allow for compiler settings specified by kokkos."
     )
-  IF (EXITS "${PROJECT_COMPILER_CONFIG_FILE}")
+  IF (EXISTS "${PROJECT_COMPILER_CONFIG_FILE}")
     # This is one level of indirection to Kokkos
     INCLUDE("${PROJECT_COMPILER_CONFIG_FILE}")
-  ELSEIF(EXITS "${KOKKOS_COMPILER_CONFIG_FILE}")
+  ELSEIF(EXISTS "${KOKKOS_COMPILER_CONFIG_FILE}")
    # This is directly pulling in kokkos file
    INCLUDE("${KOKKOS_COMPILER_CONFIG_FILE}")
    MESSAGE(FATAL_ERROR
