@@ -3009,7 +3009,7 @@ TRIBITS_ADD_ADVANCED_TEST( TribitsExampleProject_PkgWithUserErrors_PASS
 
   TEST_4 CMND ${CMAKE_CTEST_COMMAND} ARGS -VV
     PASS_REGULAR_EXPRESSION_ALL
-      "Test [#]1: PkgWithUserErrors_PkgWithUserErrorsTest_MPI_1 [.]+ +Passed"
+      "Test [#]1: PkgWithUserErrors_PkgWithUserErrorsTest[_MPI1]* [.]+ +Passed"
     ALWAYS_FAIL_ON_NONZERO_RETURN
 
   )
